@@ -22,7 +22,9 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 	jd := User{ID: 1, Name: "John Doe", Email: "john.doe@example.com"}
 	jdjs, err := json.Marshal(jd)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("error marshaling user: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
 	}
 	w.Write(jdjs)
 }
